@@ -98,32 +98,35 @@ List_Layers_Allnodes <- add.missing.nodes(List_Layers, pool_nodes)
 N <- Get.Number.Nodes(List_Layers_Allnodes)
 
 
-## 3.1.- We build the Supra-adjacency Matrix.
+## 3.1.- We build the Transition matrix of the multiplex graph. it
+##       accounts for the different possible transition of the partile in a multiplex graph.
 ################################################################################################################
-### We generate the matrix that accounts for the cost of switching from one layer to the other. In this point
-### same cost is assumed to all the possible transitions, and additionally we do not consider the situation
-### where the protein can jump to the same layer, and therefore stay in the same node after a step of the walker.
-### already are on)
+### We generate the matrix that accounts for all the different possible transitions in a multiplex graphs.
+### Basically: After and iteration of the algo, we can stay in the same layer (we will move to any of
+### the neighbours of the current node) or we can move to the same current node but in a different layer.
 
-### We don't consider the possibility of stay in the same node in the same layer after one step 
-### Therefore diagonal elements are zero.
-D_Cost_JumpLayer <- matrix(1,nrow = L, ncol=L)
-diag(D_Cost_JumpLayer) <- 0
-
-### Parameter delta. Quantifies the probability to rest in the same layer after an step of to change. In this section
+### Parameter delta. Quantifies the probability to change among layers after an step of the algo. In this section
 ### we consider same probability to stay or to change. 
 ############################
+delta_parameter <- 0.5
+
+
+### Now we build our multiplex/monoplex transition Matrix and we normalize it by column (Supra_Adj_Matrix)
+
+### We differentiate between the monoplex and the multiplex situation.
+print("Generating the Multiplex Transition Matrix...")
+
 if (L > 1){
-  delta_parameter <- 0.5
-} else { #monoplex situation.
-  delta_parameter <- 1
+  ### Multiplex.
+  Supra_Adj_Matrix <- get.supra.adj.multiplex(List_Layers_Allnodes,delta_parameter,N)
+} else{
+  ### Monoplex.
+  Supra_Adj_Matrix <- as_adjacency_matrix(List_Layers_Allnodes[[1]],sparse = TRUE)
+  Supra_Adj_Matrix <- Supra_Adj_Matrix[order(rownames(Supra_Adj_Matrix)),order(colnames(Supra_Adj_Matrix))]
+  colnames(Supra_Adj_Matrix) <- paste(colnames(Supra_Adj_Matrix),1,sep="_")
+  rownames(Supra_Adj_Matrix) <- paste(rownames(Supra_Adj_Matrix),1,sep="_")
 }
-
-
-### Now we build our Supra-Adjacency Matrix Normalizaed by column. 
-print("Generating Supra-Adjacency Matrix...")
-
-Supra_Adj_Matrix <- get.supra.adj.multiplex(List_Layers_Allnodes,delta_parameter,D_Cost_JumpLayer,N)
+  
 ### We perform the column normalizaiton.
 Total_Strengh_of_Nodes <-Matrix::colSums(Supra_Adj_Matrix, na.rm = FALSE, dims = 1,sparseResult = FALSE)
 print("Getting the Column Normalization...")
