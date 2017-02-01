@@ -2,7 +2,7 @@
 ################################################################################################################
 ####
 #### CDF_Plots_Generation: # Script that generates a file containing a CDF plot. CDF: Cumulative Distributive
-####                        Function. It is the figure associated to the Results 3.1 section. ¿Figure 2?
+####                        Function. It is the figure associated to the Results 3.1 section: Figure 2
 ####                                          
 ################################################################################################################
 ################################################################################################################
@@ -67,7 +67,7 @@ Input_Files_PATH_COEX <- read.table("Results_31/Pathways_Coex.txt", header = TRU
 # [1] 856.6021
 Input_Files_PPI_PATH_COEX <- read.table("Results_31/PPI_Pathways_Coex.txt", header = TRUE, stringsAsFactors = FALSE)
 # > mean(Input_Files_PPI_PATH_COEX$Global_Ranking)
-# [1] 787.5053
+# [1] 802.3072
   
 ################################################################################################################
 ## 3.- We generate a data frame with all the rankings we are going to take in account. We calculate CDF
@@ -100,6 +100,6 @@ cdf <- ggplot(ggdata, aes(x=value)) + stat_ecdf(aes(colour=variable,linetype=var
 cdf
 
 cdf + coord_cartesian(xlim = c(1, 60), ylim = c(0,0.35)) 
-ggsave("../Figures/Figure_2.jpg")
+ggsave("../Figures_V2/Figure_2.jpg")
 
 
