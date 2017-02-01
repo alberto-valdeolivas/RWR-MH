@@ -2,15 +2,15 @@
 ################################################################################################################
 ####
 #### LOOCV_Merged_Metworks:  # Script that performs a validation of the ranking ability of RWR on Merged Networks 
-####                           via a LOOCV process of disease-gene associations.
-####                                          
+####                           via a LOOCV process of disease-gene associations. 
+####                           Merged_Networks = Agreggated Networks = Multigraphs                  
 ################################################################################################################
 ################################################################################################################
 ####
 #### 1. NAME: LOOCV_Merged_Metworks.R: 
 #### 2. CONTENTS: Protocol to validate the ranking ability of RWR via a LOOCV when this method is performed
 ####              over monoplex networks merged on a multigraph (Graph with nodes that can be connected by
-####              different type of nodes.)
+####              different type of nodes.). Also called Aggregated Network.
 #### 3. CREATED: 02/12/2016 by Alberto Valdeolivas.
 ####
 ################################################################################################################
@@ -23,8 +23,8 @@
 ####              in other scripts to plot the results via a cumulative distributive function (CDF) 
 ####
 ####    4.1. INPUT PARAMETERS:
-####      - 1.- Networks to be considered: RWR can be performed over monoplex networks (PPI, PATH or COEX) or over
-####        any multiplex network resulting from the combinitaion of those ones.
+####      - 1.- Networks to be merged: RWR can be performed over monoplex networks (PPI, PATH or COEX) or over
+####        any multigraph  resulting from the combinitaion of those ones.
 ####      - 2.- The name of the file containing the nodes used as benchmark for performance comparisons. 
 ####        Reference nodes (For instace: Commo nodes resulting from intersection, pool of nodes resulting from union)
 ####      - 3.- The input file name. The file should contain diseases in the first column and genes its
