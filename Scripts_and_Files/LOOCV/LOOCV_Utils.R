@@ -72,7 +72,7 @@ Random_Walk_Restart <- function(Network_Matrix, r,SeedGenes ){
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- We read the different layers that integrate the multiplex network.
+# 3.- We read the different layers that integrate the multiplex network.
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
 read.layers <- function(vec_layers){
@@ -122,7 +122,7 @@ read.layers <- function(vec_layers){
 } 
 
 ### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- We obtain the common nodes of the considered layers of the multiplex.
+# 4.- We obtain the common nodes of the considered layers of the multiplex.
 #     Intersection of nodes that are present in all the considered layers.
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
@@ -142,7 +142,7 @@ common.nodes <- function(Layers){
 }
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- We obtain the pool of nodes of the considered layers of the multiplex.
+# 5.- We obtain the pool of nodes of the considered layers of the multiplex.
 #     (Union of nodes of all the layers)
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
@@ -165,7 +165,7 @@ pool.of.nodes <- function(Layers){
 } 
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- From the pool of nodes we add the missing proteins to each layer as 
+# 6.- From the pool of nodes we add the missing proteins to each layer as 
 #     isolated nodes.
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 add.missing.nodes <- function (Layers,NodeNames) {
@@ -187,7 +187,7 @@ add.missing.nodes <- function (Layers,NodeNames) {
 
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- We check the total number of nodes in every layer and we return it. 
+# 7.- We check the total number of nodes in every layer and we return it. 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 Get.Number.Nodes <- function(Layers_Allnodes) {
   
@@ -208,10 +208,10 @@ Get.Number.Nodes <- function(Layers_Allnodes) {
 }
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- We check the total number of nodes in every layer and we return it. 
+# 8.- We check the total number of nodes in every layer and we return it. 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
-get.supra.adj.multiplex <- function(Layers,delta,D_Cost,N){
+get.supra.adj.multiplex <- function(Layers,delta,N){
   
   ## IDEM_MATRIX.
   Idem_Matrix <- Diagonal(N, x = 1)
@@ -221,6 +221,8 @@ get.supra.adj.multiplex <- function(Layers,delta,D_Cost,N){
   
   Col_Node_Names <- character()
   Row_Node_Names <- character()
+  
+  ## We differentiate here between the monoplex situation and the multiplex one since delta parameter does not make sense as defined for a monoplex.
   
   for (i in 1:L){
     Adjacency_Layer <-  as_adjacency_matrix(Layers[[i]],sparse = TRUE)
@@ -232,20 +234,22 @@ get.supra.adj.multiplex <- function(Layers,delta,D_Cost,N){
     Col_Node_Names <- c(Col_Node_Names,Layer_Col_Names)
     Row_Node_Names <- c(Row_Node_Names,Layer_Row_Names)
     
-    ## We fill the diagonal blocks with the adjacencies matrix of each layer.
+    
+    ## We fill the diagonal blocks with the transition probability within a layer
     Position_ini_row <- 1 + (i-1)*N
     Position_end_row <- N + (i-1)*N
-    SupraAdjacencyMatrix[(Position_ini_row:Position_end_row),(Position_ini_row:Position_end_row)] <- delta*((D_Cost[i,i]*Idem_Matrix) + Adjacency_Layer)
+    SupraAdjacencyMatrix[(Position_ini_row:Position_end_row),(Position_ini_row:Position_end_row)] <- (1-delta)*(Adjacency_Layer)
     
     ## We fill the off-diagonal blocks with the transition probability among layers.
     for (j in 1:L){
       Position_ini_col <- 1 + (j-1)*N
       Position_end_col <- N + (j-1)*N
       if (j != i){
-        SupraAdjacencyMatrix[(Position_ini_row:Position_end_row),(Position_ini_col:Position_end_col)] <- (1-delta)*(D_Cost[i,j]*Idem_Matrix)
+        SupraAdjacencyMatrix[(Position_ini_row:Position_end_row),(Position_ini_col:Position_end_col)] <- (delta/(L-1))*Idem_Matrix
       }
     }
-  }
+  } 
+  
   
   rownames(SupraAdjacencyMatrix) <- Row_Node_Names
   colnames(SupraAdjacencyMatrix) <- Col_Node_Names
@@ -260,7 +264,7 @@ get.supra.adj.multiplex <- function(Layers,delta,D_Cost,N){
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- Function that takes a vector with names of the layers of our multiplex 
+# 9.- Function that takes a vector with names of the layers of our multiplex 
 #     network and generate their combined(merged) 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
@@ -302,7 +306,7 @@ Merge.Layers <- function(vec_layers){
 } 
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- Function that normalizes the weigthed sparse matrix(Merged Networks) 
+# 10.- Function that normalizes the weigthed sparse matrix(Merged Networks) 
 #     This version is for Sparse matrix to save space in RAM memory when executing.
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 Normalize_Matrix_Sparse <- function(Network_Matrix,Strengh_of_Nodes){
@@ -322,7 +326,7 @@ Normalize_Matrix_Sparse <- function(Network_Matrix,Strengh_of_Nodes){
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- Function that recovers the gene-phenotype relations for a set of proteins
+# 11.- Function that recovers the gene-phenotype relations for a set of proteins
 #     retriving their associates diseases from Biomart (mim codes.)
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 get.disease.gene.relations <- function(proteins){
@@ -349,7 +353,7 @@ get.disease.gene.relations <- function(proteins){
 }
 
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
-# X.- Function that generates a bipartite graph from gene-disease relations.
+# 12.- Function that generates a bipartite graph from gene-disease relations.
 #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
 
 get.bipartite.graph <- function(proteins_sorted, disease_names, Gene_Phenotype_relation,Number_Proteins,Number_Diseases){
@@ -387,7 +391,7 @@ get.bipartite.graph <- function(proteins_sorted, disease_names, Gene_Phenotype_r
 }
 
 ################################################################################################################
-# X.- We expand the bipartite graph to fit the dimensions of our multilpex system. From every layer, we can
+# 13.- We expand the bipartite graph to fit the dimensions of our multilpex system. From every layer, we can
 # jump to the other subnetwork (disease similarity network in this case)
 ################################################################################################################
 expand.bipartite.graph <- function(Number_Proteins,Number_Layers,Number_Diseases,Bipartite_matrix){
@@ -409,11 +413,11 @@ expand.bipartite.graph <- function(Number_Proteins,Number_Layers,Number_Diseases
 }
 
 ################################################################################################################
-# X.- We compute the transition matrices for the multiplex-heterogeneous system. 
+# 14.- We compute the transition matrices for the multiplex-heterogeneous system. 
 #      Those matrices will generate the final transition matrices. 
 ################################################################################################################
 
-# X.1.-Protein-Disease Transition Matrix.
+# 14.1.-Protein-Disease Transition Matrix.
 ################################################################################################################
 get.transition.protein.disease <- function(Number_Proteins,Number_Layers,Number_Diseases,SupraBipartiteMatrix,lambda){
   
@@ -431,7 +435,7 @@ get.transition.protein.disease <- function(Number_Proteins,Number_Layers,Number_
   return(Transition_Protein_Disease)
 }
 
-# X.2.-Disease-Protein Transition Matrix.
+# 14.2.-Disease-Protein Transition Matrix.
 ################################################################################################################
 get.transition.disease.protein <- function(Number_Proteins,Number_Layers,Number_Diseases,SupraBipartiteMatrix,lambda){
   
@@ -450,7 +454,7 @@ get.transition.disease.protein <- function(Number_Proteins,Number_Layers,Number_
   return(Transition_Disease_Protein)
 }
 
-# X.3.-Multiplex intra-transition Matrix. It's very slow... Transform to c++
+# 14.3.-Multiplex intra-transition Matrix. It's very slow... Transform to c++
 ################################################################################################################
 get.transition.multiplex <- function(Number_Proteins,Number_Layers,lambda,SupraAdjacencyMatrix,SupraBipartiteMatrix){
   
@@ -472,7 +476,7 @@ get.transition.multiplex <- function(Number_Proteins,Number_Layers,lambda,SupraA
   return(Transition_Multiplex_Network)
 }
 
-# X.4.-DiseaseSimilarity intra-transition Matrix.
+# 14.4.-DiseaseSimilarity intra-transition Matrix.
 ################################################################################################################
 get.transition.disease <- function(Number_Diseases,lambda,AdjMatrix,SupraBipartiteMatrix){
   
