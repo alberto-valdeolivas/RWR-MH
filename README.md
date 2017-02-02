@@ -26,7 +26,7 @@ Once the compressed file is extracted, you should move to this folder. The main 
 
 2. **Input_Files/Parameters_Example.txt**: second entry refers to the different parameters of the RWR-M. It should be a plain text file containing the parameters as specified in the example file provided. We strongly recommend to use this file and just modify the numerical values if you want to tune the parameters. The original example file accounts for their default values used in our article. These default values have shown to be very suitable for the method.
 
-3. **Results_Example**: third argument indicates the name you want to provide to the output files. The output files will be generated in the Output_Files folder. 
+3. **Results_Example**: third argument indicates the name you want to provide to the output files. The output files will be generated in the Output_Files folder with the name provided by tu used in this argument. Two files with the same name but different extension will be created. The first one is a .txt file containing all the genes in the network and their associated score. The file is sorted by score in such a way that the closer genes to the seeds are located in the top positions. The second file is a .gr network file. It accounts for all the interactions among the seeds and the top k candidates (k is a parameter that we can change in the previous file). This file can be loaded for instance into [Cytoscape](http://www.cytoscape.org/) providing a suitable view of the results. 
 
 
 
