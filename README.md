@@ -3,8 +3,26 @@
 There are three different elements in this repository: 
 
 1. **/Scripts_and_Files Folder**: It contains the scripts and the files used to obtain the results shown in the article: "Random Walk with Restart on Multiplex and Heterogeneous Biological Networks". 
-2. **/RWR-M.zip**: It contains all the files and scripts needed to perform a random walk with restart on a multiplex network (RWR-M) such as described in the article: "Random Walk with Restart on Multiplex and Heterogeneous Biological Networks"
-3. **/RWR-MH.zip:** It contains all the files and scripts needed to perform a random walk with restart on a multiplex and heterogeneous network (RWR-MH) such as described in the article: "Random Walk with Restart on Multiplex and Heterogeneous Biological Networks"
 
+2. **/RWR-M.zip**: It contains all the files and scripts needed to perform a random walk with restart on a multiplex network (RWR-M) such as described in the article: "Random Walk with Restart on Multiplex and Heterogeneous Biological Networks".
 
+3. **/RWR-MH.zip:** It contains all the files and scripts needed to perform a random walk with restart on a multiplex and heterogeneous network (RWR-MH) such as described in the article: "Random Walk with Restart on Multiplex and Heterogeneous Biological Networks".
+
+## RWR-H 
+
+Random walk with restart on a biological multiplex network integrated by 3 layers accounting for different types of links among proteins (PPI, pathways and co-expression). The user provides an initial protein or set of proteins, seed nodes, and the algorithm will measure the proximity of every protein within the network to the input seeds. 
+
+#### Installation
+
+All the scripts and files needed to run the algorithm can be obtained by download the compressed file [/RWR-M.zip] (https://github.com/alberto-valdeolivas/RWR-MH/blob/master/RWR-M.zip). Extract the file in the desired location within your computer. The scripts are written in R with some functions developped in C++. Therefore, in order to execute it you need to install [R] (https://cran.r-project.org/doc/manuals/r-release/R-admin.html). 
+
+#### Usage
+
+Once the compressed file is extracted, you should move to this folder. The main script is called RWR-M.R and if you open it you can find a detailed explanation of the process along with instructions about how to execute it, the input required files and the output files that will be created. A case example with all the required files is provided. To run the algorithm, you need to type in the command line the following order: 
+
+`Rscript RWR-M.R Input_Files/Seeds_Example.txt Input_Files/Parameters_Example.txt Results_Example`
+
+1. **Input_Files/Seeds_Example.txt**: This first parameter makes reference to the seed proteins. It should be a plain text file containing the seeds proteins (One protein per line and at least one protein). In the provided example TP53 and LMNB1 genes will be took as seeds. To use your own seeds you can either modify this file or reference here to another plain text file. 
+
+1. **Input_Files/Seeds_Example.txt**: This first parameter makes reference to the seed proteins. It should be a plain text file containing the seeds proteins (One protein per line and at least one protein). In the provided example TP53 and LMNB1 genes will be took as seeds. To use your own seeds you can either modify this file or reference here to another plain text file. 
 
