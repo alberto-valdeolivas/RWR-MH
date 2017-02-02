@@ -22,7 +22,11 @@ Once the compressed file is extracted, you should move to this folder. The main 
 
 `Rscript RWR-M.R Input_Files/Seeds_Example.txt Input_Files/Parameters_Example.txt Results_Example`
 
-1. **Input_Files/Seeds_Example.txt**: This first parameter makes reference to the seed proteins. It should be a plain text file containing the seeds proteins (One protein per line and at least one protein). In the provided example TP53 and LMNB1 genes will be took as seeds. To use your own seeds you can either modify this file or reference here to another plain text file. 
+1. **Input_Files/Seeds_Example.txt**: first argument makes reference to the seed proteins. It should be a plain text file containing the seeds proteins (One protein per line and at least one protein). In the provided example TP53 and LMNB1 genes will be took as seeds. To use your own seeds you can either modify this file or reference here to another plain text file. 
 
-1. **Input_Files/Seeds_Example.txt**: This first parameter makes reference to the seed proteins. It should be a plain text file containing the seeds proteins (One protein per line and at least one protein). In the provided example TP53 and LMNB1 genes will be took as seeds. To use your own seeds you can either modify this file or reference here to another plain text file. 
+2. **Input_Files/Parameters_Example.txt**: second entry refers to the different parameters of the RWR-M. It should be a plain text file containing the parameters as specified in the example file provided. We strongly recommend to use this file and just modify the numerical values if you want to tune the parameters. The original example file accounts for their default values used in our article. These default values have shown to be very suitable for the method.
+
+3. **Results_Example**: third argument indicates the name you want to provide to the output files. The output files will be generated in the Output_Files folder. 
+
+
 
