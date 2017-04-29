@@ -59,7 +59,7 @@ Input_Files_Multigraph <- read.table("Results_32/Merged_PPI_PATH_COEX.txt", head
 ## 3.- We generate a data frame with all the rankings we are going to take in account. We calculate CDF
 ################################################################################################################
 Multiplex <- Input_Files_Multiplex$Global_Ranking
-Multigraph <- Input_Files_Multigraph$Global_Ranking
+Aggregated <- Input_Files_Multigraph$Global_Ranking
 
 ggdata <- data.frame(Multiplex,Multigraph )
 
