@@ -12,7 +12,7 @@
 #### 2. CONTENTS: Protocol to Build a Disease-Disease Similarity Network from Human Phenotype Ontology (HPO)  
 ####    data. We calculate the similarty among each pair of diseases based on the information content of 
 ####    their phenotype ontology (Generate_Disease_Network_1). 
-####    Then, that information will be used to build a KNN similarity graph where 
+####    Then, that information will be used to build a similarity graph where 
 ####    each disease is connected to its five nearest neighbours (Generate_Disease_Network_2).
 #### 3. CREATED: 29/11/2016 by Alberto Valdeolivas.
 ####
@@ -20,7 +20,7 @@
 ################################################################################################################
 #### 4. DESCRIPTION: Protocol to Build a Disease-Disease Similarity Network from Human Phenotype Ontology (HPO)  
 ####    data. We calculate the similarty among each pair of diseases based on the information content of 
-####    their phenotype ontology. A KNN graph is constructed according to their similarity scores, and each
+####    their phenotype ontology. A graph is constructed according to their similarity scores, and each
 ####    disease is connected to its five nearest neighbours.
 ####    - HPO Version: phenotype_annotation.tab: Compilar #1233 (13-ene-2016 13:18:26)
 ####    - HPO Ontolohy Graph: "http://purl.obolibrary.org/obo/hp.obo" (Downloaded on...)
