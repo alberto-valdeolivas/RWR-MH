@@ -61,7 +61,7 @@ Input_Files_Multigraph <- read.table("Results_32/Merged_PPI_PATH_COEX.txt", head
 Multiplex <- Input_Files_Multiplex$Global_Ranking
 Aggregated <- Input_Files_Multigraph$Global_Ranking
 
-ggdata <- data.frame(Multiplex,Multigraph )
+ggdata <- data.frame(Multiplex,Aggregated )
 
 ggdata <- melt(ggdata)
 ggdata <- ddply(ggdata, .(variable), transform, ecd=ecdf(value)(value))
