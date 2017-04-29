@@ -69,12 +69,12 @@ Input_Files_Multiplex_Heterogeneous <- read.table("Results_33/Multiplex_Heteroge
 ################################################################################################################
 ## 3.- We generate a data frame with all the rankings we are going to take in account. We calculate CDF
 ################################################################################################################
-Monoplex <- Input_Files_Monoplex$Global_Ranking
+Monoplex_PPI <- Input_Files_Monoplex$Global_Ranking
 Multiplex <- Input_Files_Multiplex$Global_Ranking
 Heterogeneous <- Input_Files_Heterogeneous$Global_Ranking
 Multiplex_Heterogeneous <- Input_Files_Multiplex_Heterogeneous$Global_Ranking
   
-ggdata <- data.frame(Monoplex,Multiplex,Heterogeneous,Multiplex_Heterogeneous)
+ggdata <- data.frame(Monoplex_PPI,Multiplex,Heterogeneous,Multiplex_Heterogeneous)
 
 ggdata <- melt(ggdata)
 ggdata <- ddply(ggdata, .(variable), transform, ecd=ecdf(value)(value))
