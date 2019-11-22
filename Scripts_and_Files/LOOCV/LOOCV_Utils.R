@@ -23,11 +23,13 @@ install.packages.if.necessary <- function(CRAN.packages=c(), bioconductor.packag
     }	
   }
   if (length(bioconductor.packages) > 0) {
-    source("http://bioconductor.org/biocLite.R")
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+      install.packages("BiocManager")
+    BiocManager::install()
   }
   for (p in bioconductor.packages) {
     if (!require(p, character.only=T)) {
-      biocLite(p) 
+      BiocManager::install(p)
       library(p, character.only=T)
     }
   }
