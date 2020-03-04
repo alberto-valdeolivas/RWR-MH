@@ -113,12 +113,24 @@ GetPathwayData <- function (db.name, db.specie){
   
   for (i in 1:length(db)) {
     current.pathway <- (convertIdentifiers(db[[i]],"SYMBOL"))
-    current.pathway.info <- try(data.frame(src = current.pathway@edges$src,
-                                           dest = current.pathway@edges$dest,
-                                           direction = current.pathway@edges$direction,
-                                           type = current.pathway@edges$type,
-                                           name = current.pathway@title),silent=TRUE) 
-    OneDb.HGNC <- rbind(OneDb.HGNC,current.pathway.info)
+    
+    if (db.name == "kegg"){
+        current.pathway.info <- 
+            try(data.frame(src = current.pathway@protPropEdges$src,
+                dest = current.pathway@protPropEdges$dest,
+                direction = current.pathway@protPropEdges$direction,
+                type = current.pathway@protPropEdges$type,
+                name = current.pathway@title),silent=TRUE) 
+        OneDb.HGNC <- rbind(OneDb.HGNC,current.pathway.info)
+    } else {
+        current.pathway.info <- 
+            try(data.frame(src = current.pathway@protEdges$src,
+                dest = current.pathway@protEdges$dest,
+                direction = current.pathway@protEdges$direction,
+                type = current.pathway@protEdges$type,
+                name = current.pathway@title),silent=TRUE) 
+        OneDb.HGNC <- rbind(OneDb.HGNC,current.pathway.info)
+    }
   }
   
   OneDb.HGNC<-OneDb.HGNC[complete.cases(OneDb.HGNC),] #remove NA rows
